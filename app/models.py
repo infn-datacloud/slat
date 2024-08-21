@@ -1,4 +1,4 @@
-# Copyright (c) Istituto Nazionale di Fisica Nucleare (INFN). 2020-2021
+# Copyright (c) Istituto Nazionale di Fisica Nucleare (INFN). 2020-2024
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ from flask_migrate import Migrate
 from flask_alembic import Alembic
 from flask_login import UserMixin
 from flask_login import LoginManager
-from flaat import tokentools
+from flaat import access_tokens
 
 # initialize SQLAlchemy
 db: SQLAlchemy = SQLAlchemy()
@@ -135,7 +135,7 @@ class OAuth(OAuthConsumerMixin, db.Model):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         token = kwargs['token']
-        jwt = tokentools.get_accesstoken_info(token['id_token'])
+        jwt = access_tokens.get_access_token_info(token['id_token'])
         if not 'provider_user_id' in kwargs:
             self.provider_user_id = jwt['body']['sub']
         if not 'issuer' in kwargs:
@@ -148,10 +148,8 @@ from app.utils.sqlalchemy_helpers import GUID, IntEnum
 db.GUID = GUID
 
 class SlaStatusTypes(enum.IntEnum):
-    draft = 1
-    sent = 2
-    accepted = 3
-    expired = 4
+    enabled = 1
+    disabled = 2
 
 
 class Sla(db.Model):
@@ -170,7 +168,7 @@ class Sla(db.Model):
     public_ips = db.Column(db.Integer, default=0)
     storage_gb = db.Column(db.Integer, default=0)
     num_instances = db.Column(db.Integer, default=0)
-    status = db.Column(IntEnum(SlaStatusTypes), default=SlaStatusTypes.draft)
+    status = db.Column(IntEnum(SlaStatusTypes), default=SlaStatusTypes.enabled)
 
     def __init__(self, *args):
         super(db.Model, self).__init__(*args)

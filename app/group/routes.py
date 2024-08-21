@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from flask import Blueprint, render_template
-from app import app, forms, models, db
+from flask import current_app as app, Blueprint, render_template
+from app import forms, models, db
 from sqlalchemy.exc import IntegrityError
 from flask_login import login_required
 from app.utils.decorators import *

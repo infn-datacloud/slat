@@ -1,4 +1,4 @@
-# Copyright (c) Istituto Nazionale di Fisica Nucleare (INFN). 2020-2021
+# Copyright (c) Istituto Nazionale di Fisica Nucleare (INFN). 2020-2024
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,18 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from flask import Blueprint, render_template
+from flask import current_app as app, Blueprint, render_template
 from flask_login import login_required
-from app import app, cmdb, db, forms, models
+from app import db, forms, models
+from app.extensions import cmdb_client
 from app.utils.decorators import *
 
 sla_bp = Blueprint('sla_bp', __name__,
                            template_folder='templates',
                            static_folder='static')
-
-
-cmdb_client = cmdb.Client(app.config.get("CMDB_URL"), cacert=app.config.get("CMDB_CA_CERT"))
-
 
 
 @sla_bp.route('/list', methods=["GET"])
