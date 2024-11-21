@@ -37,8 +37,9 @@
                   <!--Table body-->
                   <tbody>
                     {% for sla in slas %}
-                    <tr>
-                        <td>{{ sla.id }}</td>
+                    <tr class="{% if sla.status.name == 'disabled' %}table-danger{% endif %}" 
+                      {% if sla.status.name == 'disabled' %}data-toggle="tooltip" title="This SLA is disabled"{% endif %}>
+                      <td>{{ sla.id }}</td>
                         <td>{{ sla.customer }}</td>
                         <td>{{ sla.type }}</td>
                         <td>{{ sla.start_date }}</td>
@@ -103,6 +104,12 @@ $('#delete_sla').on('show.bs.modal', function (event) {
     modal.find('.modal-title').text('Confirm deletion for SLA ' + sla)
     modal.find('.btn-danger').prop('href', url)
 })
+</script>
+
+<script>
+  $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip(); 
+  });
 </script>
 
 {% endblock %}

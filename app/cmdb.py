@@ -1,4 +1,4 @@
-# Copyright (c) Istituto Nazionale di Fisica Nucleare (INFN). 2020-2021
+# Copyright (c) Istituto Nazionale di Fisica Nucleare (INFN). 2020-2024
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -25,9 +25,14 @@ class Client:
 
     """
 
-    def __init__(self, base_url, timeout=30, cacert = None):
+    def __init__(self, base_url=None, timeout=30, cacert = None):
         self.timeout = timeout
         self.base_url = base_url
+        self.verify = cacert if cacert else True
+
+    def init_app(self, app):
+        self.base_url = app.config.get("CMDB_URL")
+        cacert = app.config.get("CMDB_CA_CERT")
         self.verify = cacert if cacert else True
 
 

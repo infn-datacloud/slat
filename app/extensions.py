@@ -12,21 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from flask import render_template, flash, redirect, url_for
-from app import app
-from flask_login import login_required, logout_user
+from flask_migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy
+from flaat.flask import Flaat
+from .cmdb import Client
 
-
-@app.route('/')
-def login():
-    return render_template('home.html')
-
-
-@app.route("/logout")
-@login_required
-def logout():
-    logout_user()
-    flash("You have logged out", 'success')
-    return redirect(url_for("login"))
-
-
+# Initialize extensions
+#db = SQLAlchemy()
+#migrate = Migrate()
+flaat = Flaat()
+cmdb_client = Client()

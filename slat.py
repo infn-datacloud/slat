@@ -1,4 +1,4 @@
-# Copyright (c) Istituto Nazionale di Fisica Nucleare (INFN). 2020-2021
+# Copyright (c) Istituto Nazionale di Fisica Nucleare (INFN). 2020-2024
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,7 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from app import app
+from app import create_app
+
+app = create_app()  # Create the app instance
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5001)
+

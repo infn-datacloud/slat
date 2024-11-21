@@ -1,4 +1,4 @@
-# Copyright (c) Istituto Nazionale di Fisica Nucleare (INFN). 2020-2021
+# Copyright (c) Istituto Nazionale di Fisica Nucleare (INFN). 2020-2024
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -25,6 +25,10 @@ EGI_AAI_CLIENT_ID=""
 EGI_AAI_CLIENT_SECRET=""
 
 TRUSTED_OIDC_IDP_LIST = [ { 'iss': 'https://iam.example.org/', 'type': 'indigoiam' } ]
+FLAAT_VERIFY_JWT = False
+FLAAT_VERIFY_TLS = True
+FLAAT_ISS = ""
+FLAAT_REQUEST_TIMEOUT = 60
 
 ### ROLES
 SLAT_ADMIN_GROUP = "slat-admin"

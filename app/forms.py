@@ -1,4 +1,4 @@
-# Copyright (c) Istituto Nazionale di Fisica Nucleare (INFN). 2020-2021
+# Copyright (c) Istituto Nazionale di Fisica Nucleare (INFN). 2020-2024
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ from wtforms.validators import DataRequired, ValidationError
 from wtforms.fields.html5 import DateField
 from wtforms.widgets import html_params, Select
 from markupsafe import Markup
+from app.models import SlaStatusTypes
 
 class AttribSelect(Select):
     """
@@ -63,6 +64,9 @@ class SlaForm(FlaskForm):
     ram_gb = IntegerField('Total amount of RAM in GB (if applicable)', default=0)
     public_ips = IntegerField('Total number of Public IPs (if applicable)', default=0)
     storage_gb = IntegerField('Total amount of storage in GB (if applicable)', default=0)
+    status = SelectField('Status', choices=[(SlaStatusTypes.enabled.value, 'Enabled'),
+                                            (SlaStatusTypes.disabled.value, 'Disabled')],
+                         coerce=int, default=SlaStatusTypes.enabled.value, validators=[DataRequired()])
     submit = SubmitField('Save')
 
     def validate_end_date(form, field):

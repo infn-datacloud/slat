@@ -12,13 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from flask import Blueprint, render_template, request
+from flask import current_app as app, Blueprint, render_template, request
 from flask_login import login_required
-from app import app, cmdb
-
-
-cmdb_client = cmdb.Client(app.config.get("CMDB_URL"), cacert=app.config.get("CMDB_CA_CERT"))
-
+from app.extensions import cmdb_client
 
 provider_bp = Blueprint('provider_bp', __name__,
                            template_folder='templates',
